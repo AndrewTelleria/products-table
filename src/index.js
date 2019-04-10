@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import ProductTable from './ProductTable';
-import ProductCategoryRow from './ProductCategoryRow';
 import SearchBar from './SearchBar';
 
 
