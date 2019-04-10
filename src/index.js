@@ -76,19 +76,33 @@ class ProductTable extends React.Component {
 }
 
 class SearchBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
+    this.handleInStockOnlyChange = this.handleInStockOnlyChange.bind(this);
+  }
+
+  handleFilterTextChange(e) {
+    this.props.onFilterTextChange(e.target.value);
+  }
+
+  handleInStockOnlyChange(e) {
+    this.props.onInStockOnlyChange(e.target.value);
+  }
+
   render() {
-    const filterText = this.props.filterText;
-    const inStockOnly = this.props.inStockOnly;
     return (
       <form>
         <input
           type="text"
           placeholder="Search..."
-          value={filterText} />
+          value={this.props.filterText}
+          onChange={this.handleFilterTextChange} />
         <p>
           <input
             type="checkbox"
-            value={inStockOnly} />
+            value={this.props.inStockOnly}
+            onChange={this.handleInStockOnlyChange} />
           {' '}
           Only show products in stock
         </p>
@@ -100,17 +114,30 @@ class SearchBar extends React.Component {
 class FilterableProductTable extends React.Component {
   constructor(props) {
     super(props);
+    this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
+    this.handleInStockOnlyChange = this.handleInStockOnlyChange.bind(this);
     this.state = {
-      filterText: 'ball',
+      filterText: '',
       inStockOnly: false
     }
   }
+
+  handleFilterTextChange(filterText) {
+    this.setState({filterText: filterText})
+  }
+
+  handleInStockOnlyChange(inStockOnly) {
+    this.setState({inStockOnly: inStockOnly})
+  }
+
   render() {
     return (
       <div>
         <SearchBar
           filterText={this.state.filterText}
-          inStockOnly={this.state.inStockOnly}/>
+          inStockOnly={this.state.inStockOnly}
+          onFilterTextChange={this.handleFilterTextChange}
+          onInStockOnlyChange={this.handleInStockOnlyChange} />
         <ProductTable
           products={products}
           filterText={this.state.filterText}
